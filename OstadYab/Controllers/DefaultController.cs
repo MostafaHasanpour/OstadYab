@@ -72,6 +72,7 @@ namespace OstadYab.Controllers
                 return NoContent();
             }
         }
+
         [HttpGet("experience/{userId}")]
         public ActionResult<object> GetExperience(int userId)
         {
@@ -85,6 +86,25 @@ namespace OstadYab.Controllers
                 return NoContent();
             }
         }
+
+        [HttpPost("profile")]
+        public ActionResult<object> Profile(Users user)
+        {
+            try
+            {
+                if (user.Id == 0 || user.Id == null)
+                    _ostadyabContext.Users.Add(user);
+                else
+                    _ostadyabContext.Users.Update(user);
+                _ostadyabContext.SaveChanges();
+                return Ok(new { result = true });
+            }
+            catch (Exception)
+            {
+                return NoContent();
+            }
+        }
+
     }
 
     public class LoginDto
