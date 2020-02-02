@@ -28,6 +28,17 @@ namespace OstadYab
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<OstadyabContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Ostadyab")));
+            
+            services.AddCors(options =>
+            {
+                //options.AddPolicy("CorsPolicy",
+                //    builder => builder.AllowAnyOrigin()
+                //    .AllowAnyMethod()
+                //    .AllowAnyHeader()
+                //    //.WithHeaders(HeaderNames.ContentType, "X-Requested-With")
+                //    .AllowCredentials()
+                //    .Build());
+            });
 
             services.AddControllers();
         }
@@ -45,6 +56,8 @@ namespace OstadYab
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints =>
             {
